@@ -1,56 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shayroo - Home</title>
-    <link rel="stylesheet" href="home.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shayroo - Home</title>
+<link rel="stylesheet" href="home.css">
 </head>
 <body>
+
+    <!-- Top Bar -->
 
     <div class="top-bar">
         <div class="logo">Shayroo</div>
     </div>
 
+    <!-- Feed Tabs -->
+
+    <div class="feed-tabs">
+        <button class="active-tab">For You</button>
+        <button>Following</button>
+    </div>
+
+    <!-- Search -->
+
+    <div class="search-box">
+        <input type="text" placeholder="Search users or shayari...">
+    </div>
+
+    <!-- Feed -->
+
     <div class="content">
 
+        <!-- Post 1 -->
+
         <div class="shayari-card">
-            <div class="user-info">
-                <img src="https://via.placeholder.com/50" alt="">
-                <div>
-                    <h3>Rahul</h3>
-                    <p>Surat, Gujarat</p>
+
+            <div class="post-header">
+
+                <div class="user-info">
+                    <img src="https://via.placeholder.com/50" alt="">
+                    <div>
+                        <h3>@rahul</h3>
+                    </div>
                 </div>
+
+                <button class="follow-btn">
+                    Follow
+                </button>
+
             </div>
 
             <div class="shayari">
+
                 Tu mile ya na mile,<br>
                 Ye kismat ki baat hai,<br>
                 Hum koshish bhi na kare,<br>
                 Ye galat baat hai.
+
             </div>
 
-            <div class="likes">❤️ 120 Likes</div>
+            <div class="post-actions">
+
+                <button>❤️ 120</button>
+
+                <button>💬 24</button>
+
+                <button>📤 Share</button>
+
+            </div>
+
         </div>
 
+        <!-- Post 2 -->
+
         <div class="shayari-card">
-            <div class="user-info">
-                <img src="https://via.placeholder.com/50" alt="">
-                <div>
-                    <h3>Priya</h3>
-                    <p>Delhi</p>
+
+            <div class="post-header">
+
+                <div class="user-info">
+                    <img src="https://via.placeholder.com/50" alt="">
+                    <div>
+                        <h3>@priya</h3>
+                    </div>
                 </div>
+
+                <button class="following-btn">
+                    Following
+                </button>
+
             </div>
 
             <div class="shayari">
+
                 Har khushi me tera naam ho,<br>
                 Har subah tera paigam ho.
+
             </div>
 
-            <div class="likes">❤️ 56 Likes</div>
+            <div class="post-actions">
+
+                <button>❤️ 56</button>
+
+                <button>💬 12</button>
+
+                <button>📤 Share</button>
+
+            </div>
+
         </div>
 
     </div>
+
+    <!-- Bottom Nav -->
 
     <div class="bottom-nav">
         <a href="home.html" class="active">Home</a>
