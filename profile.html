@@ -23,9 +23,9 @@
             Share your shayari with the world
         </p>
 
-        <!-- Google -->
+        <!-- Google Login -->
 
-        <button class="google-btn">
+        <button class="google-btn" onclick="googleLogin()">
             Continue with Google
         </button>
 
@@ -42,6 +42,7 @@
         <!-- Email -->
 
         <input
+            id="email"
             type="email"
             placeholder="Email Address"
             class="input-field"
@@ -50,6 +51,7 @@
         <!-- Password -->
 
         <input
+            id="password"
             type="password"
             placeholder="Password"
             class="input-field"
@@ -57,13 +59,18 @@
 
         <!-- Login -->
 
-        <button class="login-btn">
+        <button
+            class="login-btn"
+            onclick="loginUser()">
             Log In
         </button>
 
         <!-- Forgot Password -->
 
-        <a href="#" class="forgot-password">
+        <a
+            href="#"
+            class="forgot-password"
+            onclick="resetPassword()">
             Forgot Password?
         </a>
 
@@ -75,7 +82,9 @@
                 Don't have an account?
             </p>
 
-            <button class="signup-btn">
+            <button
+                class="signup-btn"
+                onclick="signupUser()">
                 Sign Up
             </button>
 
@@ -89,6 +98,10 @@
         <a href="home.html">Home</a>
         <a href="profile.html" class="active">My Profile</a>
     </div>
+
+    <!-- Firebase Auth -->
+
+    <script type="module" src="auth.js"></script>
 
 </body>
 </html>
