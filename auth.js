@@ -2,7 +2,8 @@ import { auth } from "./firebase-config.js";
 
 import {
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -13,15 +14,14 @@ import {
 // Google Login
 window.googleLogin = async function () {
 
-  const provider = new GoogleAuthProvider();
-
   try {
 
-    const result = await signInWithPopup(auth, provider);
+    const provider = new GoogleAuthProvider();
 
-    alert("Welcome " + result.user.displayName);
-
-    window.location.href = "account.html";
+    await signInWithRedirect(
+      auth,
+      provider
+    );
 
   } catch (error) {
 
@@ -30,6 +30,29 @@ window.googleLogin = async function () {
   }
 
 };
+
+// Redirect Result
+getRedirectResult(auth)
+.then((result) => {
+
+  if (result && result.user) {
+
+    alert(
+      "Welcome " +
+      result.user.displayName
+    );
+
+    window.location.href =
+      "account.html";
+
+  }
+
+})
+.catch((error) => {
+
+  alert(error.message);
+
+});
 
 // Email Login
 window.loginUser = async function () {
@@ -48,7 +71,8 @@ window.loginUser = async function () {
       password
     );
 
-    window.location.href = "account.html";
+    window.location.href =
+      "account.html";
 
   } catch (error) {
 
@@ -77,6 +101,9 @@ window.signupUser = async function () {
 
     alert("Account Created");
 
+    window.location.href =
+      "account.html";
+
   } catch (error) {
 
     alert(error.message);
@@ -91,11 +118,26 @@ window.resetPassword = async function () {
   const email =
     document.getElementById("email").value;
 
+  if (!email) {
+
+    alert(
+      "Enter email first"
+    );
+
+    return;
+
+  }
+
   try {
 
-    await sendPasswordResetEmail(auth, email);
+    await sendPasswordResetEmail(
+      auth,
+      email
+    );
 
-    alert("Password reset email sent");
+    alert(
+      "Password reset email sent"
+    );
 
   } catch (error) {
 
@@ -108,19 +150,34 @@ window.resetPassword = async function () {
 // Logout
 window.logoutUser = async function () {
 
-  await signOut(auth);
+  try {
 
-  location.href = "profile.html";
+    await signOut(auth);
+
+    location.href =
+      "profile.html";
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
 
 };
 
 // Check Login
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(
+  auth,
+  (user) => {
 
-  if (user) {
+    if (user) {
 
-    console.log(user.email);
+      console.log(
+        "Logged In:",
+        user.email
+      );
+
+    }
 
   }
-
-});
+);
