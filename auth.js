@@ -1,33 +1,33 @@
 import { auth } from "./firebase-config.js";
 
 import {
-  GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  onAuthStateChanged,
-  signOut
+GoogleAuthProvider,
+signInWithRedirect,
+getRedirectResult,
+signInWithEmailAndPassword,
+createUserWithEmailAndPassword,
+sendPasswordResetEmail,
+onAuthStateChanged,
+signOut
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 // Google Login
 window.googleLogin = async function () {
 
-  try {
+try {
 
-    const provider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider();
 
-    await signInWithRedirect(
-      auth,
-      provider
-    );
+await signInWithRedirect(
+  auth,
+  provider
+);
 
-  } catch (error) {
+} catch (error) {
 
-    alert(error.message);
+alert(error.message);
 
-  }
+}
 
 };
 
@@ -35,149 +35,158 @@ window.googleLogin = async function () {
 getRedirectResult(auth)
 .then((result) => {
 
-  if (result && result.user) {
+if (result && result.user) {
 
-    alert(
-      "Welcome " +
-      result.user.displayName
-    );
+alert(
+  "Welcome " +
+  result.user.displayName
+);
 
-    window.location.href =
-      "account.html";
+location.href =
+  "account.html";
 
-  }
+}
 
 })
 .catch((error) => {
 
-  alert(error.message);
+console.log(error);
 
 });
 
 // Email Login
 window.loginUser = async function () {
 
-  const email =
-    document.getElementById("email").value;
+const email =
+document.getElementById("email").value;
 
-  const password =
-    document.getElementById("password").value;
+const password =
+document.getElementById("password").value;
 
-  try {
+try {
 
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+await signInWithEmailAndPassword(
+  auth,
+  email,
+  password
+);
 
-    window.location.href =
-      "account.html";
+location.href =
+  "account.html";
 
-  } catch (error) {
+} catch (error) {
 
-    alert(error.message);
+alert(error.message);
 
-  }
+}
 
 };
 
 // Signup
 window.signupUser = async function () {
 
-  const email =
-    document.getElementById("email").value;
+const email =
+document.getElementById("email").value;
 
-  const password =
-    document.getElementById("password").value;
+const password =
+document.getElementById("password").value;
 
-  try {
+try {
 
-    await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+await createUserWithEmailAndPassword(
+  auth,
+  email,
+  password
+);
 
-    alert("Account Created");
+alert("Account Created");
 
-    window.location.href =
-      "account.html";
+location.href =
+  "account.html";
 
-  } catch (error) {
+} catch (error) {
 
-    alert(error.message);
+alert(error.message);
 
-  }
+}
 
 };
 
 // Forgot Password
 window.resetPassword = async function () {
 
-  const email =
-    document.getElementById("email").value;
+const email =
+document.getElementById("email").value;
 
-  if (!email) {
+if (!email) {
 
-    alert(
-      "Enter email first"
-    );
+alert("Enter email first");
 
-    return;
+return;
 
-  }
+}
 
-  try {
+try {
 
-    await sendPasswordResetEmail(
-      auth,
-      email
-    );
+await sendPasswordResetEmail(
+  auth,
+  email
+);
 
-    alert(
-      "Password reset email sent"
-    );
+alert(
+  "Password reset email sent"
+);
 
-  } catch (error) {
+} catch (error) {
 
-    alert(error.message);
+alert(error.message);
 
-  }
+}
 
 };
 
 // Logout
 window.logoutUser = async function () {
 
-  try {
+try {
 
-    await signOut(auth);
+await signOut(auth);
 
-    location.href =
-      "profile.html";
+location.href =
+  "profile.html";
 
-  } catch (error) {
+} catch (error) {
 
-    alert(error.message);
+alert(error.message);
 
-  }
+}
 
 };
 
-// Check Login
+// Auto Redirect If Already Logged In
 onAuthStateChanged(
-  auth,
-  (user) => {
+auth,
+(user) => {
 
-    if (user) {
+if (user) {
 
-      console.log(
-        "Logged In:",
-        user.email
-      );
+  console.log(
+    "Logged In:",
+    user.email
+  );
 
-    }
+  if (
+    !location.pathname.includes(
+      "account.html"
+    )
+  ) {
+
+    location.href =
+      "account.html";
 
   }
+
+}
+
+}
 );
