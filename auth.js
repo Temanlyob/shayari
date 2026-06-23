@@ -16,9 +16,13 @@ signOut
 // Google Login
 window.googleLogin = async function () {
 
+alert("Google button clicked");
+
 try {
 
 const provider = new GoogleAuthProvider();
+
+alert("Redirect starting");
 
 await signInWithRedirect(
   auth,
@@ -27,7 +31,7 @@ await signInWithRedirect(
 
 } catch (error) {
 
-alert(error.message);
+alert("Google Error: " + error.message);
 
 }
 
@@ -47,12 +51,21 @@ alert(
 location.href =
   "account.html";
 
+} else {
+
+console.log(
+  "No redirect result"
+);
+
 }
 
 })
 .catch((error) => {
 
-console.log(error);
+alert(
+"Redirect Error: " +
+error.message
+);
 
 });
 
@@ -165,7 +178,7 @@ alert(error.message);
 
 };
 
-// Auto Redirect If Already Logged In
+// Auto Redirect
 onAuthStateChanged(
 auth,
 (user) => {
@@ -176,17 +189,6 @@ if (user) {
     "Logged In:",
     user.email
   );
-
-  if (
-    !location.pathname.includes(
-      "account.html"
-    )
-  ) {
-
-    location.href =
-      "account.html";
-
-  }
 
 }
 
