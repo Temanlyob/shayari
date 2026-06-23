@@ -3,37 +3,42 @@ alert("auth.js loaded");
 import { auth } from "./firebase-config.js";
 
 import {
-GoogleAuthProvider,
-signInWithRedirect,
-getRedirectResult,
-signInWithEmailAndPassword,
-createUserWithEmailAndPassword,
-sendPasswordResetEmail,
-onAuthStateChanged,
-signOut
+  GoogleAuthProvider,
+  signInWithRedirect,
+  getRedirectResult,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 // Google Login
 window.googleLogin = async function () {
 
-alert("Google button clicked");
+  alert("Google button clicked");
 
-try {
+  try {
 
-const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
 
-alert("Redirect starting");
+    alert("Redirect starting");
 
-await signInWithRedirect(
-  auth,
-  provider
-);
+    await signInWithRedirect(
+      auth,
+      provider
+    );
 
-} catch (error) {
+  } catch (error) {
 
-alert("Google Error: " + error.message);
+    alert(
+      "Google Error:\n" +
+      error.code +
+      "\n" +
+      error.message
+    );
 
-}
+  }
 
 };
 
@@ -41,156 +46,177 @@ alert("Google Error: " + error.message);
 getRedirectResult(auth)
 .then((result) => {
 
-if (result && result.user) {
+  if (result && result.user) {
 
-alert(
-  "Welcome " +
-  result.user.displayName
-);
+    alert(
+      "SUCCESS:\n" +
+      result.user.email
+    );
 
-location.href =
-  "account.html";
+    location.href = "account.html";
 
-} else {
+  } else {
 
-console.log(
-  "No redirect result"
-);
+    alert("No redirect result");
 
-}
+  }
 
 })
 .catch((error) => {
 
-alert(
-"Redirect Error: " +
-error.message
-);
+  alert(
+    "REDIRECT ERROR:\n" +
+    error.code +
+    "\n" +
+    error.message
+  );
 
 });
 
 // Email Login
 window.loginUser = async function () {
 
-const email =
-document.getElementById("email").value;
+  const email =
+    document.getElementById("email").value;
 
-const password =
-document.getElementById("password").value;
+  const password =
+    document.getElementById("password").value;
 
-try {
+  try {
 
-await signInWithEmailAndPassword(
-  auth,
-  email,
-  password
-);
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-location.href =
-  "account.html";
+    location.href =
+      "account.html";
 
-} catch (error) {
+  } catch (error) {
 
-alert(error.message);
+    alert(
+      error.code +
+      "\n" +
+      error.message
+    );
 
-}
+  }
 
 };
 
 // Signup
 window.signupUser = async function () {
 
-const email =
-document.getElementById("email").value;
+  const email =
+    document.getElementById("email").value;
 
-const password =
-document.getElementById("password").value;
+  const password =
+    document.getElementById("password").value;
 
-try {
+  try {
 
-await createUserWithEmailAndPassword(
-  auth,
-  email,
-  password
-);
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-alert("Account Created");
+    alert("Account Created");
 
-location.href =
-  "account.html";
+    location.href =
+      "account.html";
 
-} catch (error) {
+  } catch (error) {
 
-alert(error.message);
+    alert(
+      error.code +
+      "\n" +
+      error.message
+    );
 
-}
+  }
 
 };
 
 // Forgot Password
 window.resetPassword = async function () {
 
-const email =
-document.getElementById("email").value;
+  const email =
+    document.getElementById("email").value;
 
-if (!email) {
+  if (!email) {
 
-alert("Enter email first");
+    alert("Enter email first");
 
-return;
+    return;
 
-}
+  }
 
-try {
+  try {
 
-await sendPasswordResetEmail(
-  auth,
-  email
-);
+    await sendPasswordResetEmail(
+      auth,
+      email
+    );
 
-alert(
-  "Password reset email sent"
-);
+    alert(
+      "Password reset email sent"
+    );
 
-} catch (error) {
+  } catch (error) {
 
-alert(error.message);
+    alert(
+      error.code +
+      "\n" +
+      error.message
+    );
 
-}
+  }
 
 };
 
 // Logout
 window.logoutUser = async function () {
 
-try {
+  try {
 
-await signOut(auth);
+    await signOut(auth);
 
-location.href =
-  "profile.html";
+    location.href =
+      "profile.html";
 
-} catch (error) {
+  } catch (error) {
 
-alert(error.message);
+    alert(
+      error.code +
+      "\n" +
+      error.message
+    );
 
-}
+  }
 
 };
 
-// Auto Redirect
+// Auth State Check
 onAuthStateChanged(
-auth,
-(user) => {
+  auth,
+  (user) => {
 
-if (user) {
+    if (user) {
 
-  console.log(
-    "Logged In:",
-    user.email
-  );
+      alert(
+        "USER FOUND:\n" +
+        user.email
+      );
 
-}
+    } else {
 
-}
+      alert(
+        "NO USER LOGGED IN"
+      );
+
+    }
+
+  }
 );
