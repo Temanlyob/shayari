@@ -43,21 +43,16 @@ window.googleLogin = async function () {
 };
 
 // Redirect Result
+// Redirect Result
 getRedirectResult(auth)
 .then((result) => {
 
   if (result && result.user) {
 
     alert(
-      "SUCCESS:\n" +
+      "REDIRECT SUCCESS:\n" +
       result.user.email
     );
-
-    location.href = "account.html";
-
-  } else {
-
-    alert("No redirect result");
 
   }
 
@@ -199,24 +194,17 @@ window.logoutUser = async function () {
 };
 
 // Auth State Check
-onAuthStateChanged(
-  auth,
-  (user) => {
+onAuthStateChanged(auth, (user) => {
 
-    if (user) {
+  if (user) {
 
-      alert(
-        "USER FOUND:\n" +
-        user.email
-      );
+    alert(
+      "USER FOUND:\n" +
+      user.email
+    );
 
-    } else {
-
-      alert(
-        "NO USER LOGGED IN"
-      );
-
-    }
+    location.href = "account.html";
 
   }
-);
+
+});
