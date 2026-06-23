@@ -4,8 +4,7 @@ import { auth } from "./firebase-config.js";
 
 import {
   GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -22,17 +21,22 @@ window.googleLogin = async function () {
 
     const provider = new GoogleAuthProvider();
 
-    alert("Redirect starting");
-
-    await signInWithRedirect(
+    const result = await signInWithPopup(
       auth,
       provider
     );
 
+    alert(
+      "LOGIN SUCCESS:\n" +
+      result.user.email
+    );
+
+    location.href = "account.html";
+
   } catch (error) {
 
     alert(
-      "Google Error:\n" +
+      "GOOGLE ERROR:\n" +
       error.code +
       "\n" +
       error.message
@@ -41,32 +45,6 @@ window.googleLogin = async function () {
   }
 
 };
-
-// Redirect Result
-// Redirect Result
-getRedirectResult(auth)
-.then((result) => {
-
-  if (result && result.user) {
-
-    alert(
-      "REDIRECT SUCCESS:\n" +
-      result.user.email
-    );
-
-  }
-
-})
-.catch((error) => {
-
-  alert(
-    "REDIRECT ERROR:\n" +
-    error.code +
-    "\n" +
-    error.message
-  );
-
-});
 
 // Email Login
 window.loginUser = async function () {
@@ -198,12 +176,16 @@ onAuthStateChanged(auth, (user) => {
 
   if (user) {
 
-    alert(
-      "USER FOUND:\n" +
+    console.log(
+      "USER FOUND:",
       user.email
     );
 
-    location.href = "account.html";
+  } else {
+
+    console.log(
+      "NO USER LOGGED IN"
+    );
 
   }
 
